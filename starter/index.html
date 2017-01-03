@@ -64,13 +64,20 @@
         
         var img = new Image();
         img.onload = function(){
-            console.log("test");
+            //console.log("test");
+            initSprites(this);
+            run();
         }
         img.src = "res/sheet.png";
     }
     
     function run(){
-        
+        var loop = function(){
+            update();
+            render();
+            window.requestAnimationFrame(loop, canvas);
+        }
+        window.requestAnimationFrame(loop, canvas);
     }
     
     function update(){
@@ -78,12 +85,12 @@
     }
     
     function render(){
-        
+        s_bg.draw(ctx, 0, height - s_bg.height);
+        s_bg.draw(ctx, 0, height - s_bg.height);
     }
     
     main();
-    
-    
+
 </script>
 </body>
 </html
