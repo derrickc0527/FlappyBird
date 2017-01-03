@@ -27,23 +27,22 @@
 <script>
     
     var
-    
     canvas,
-        ctx,
-        width,
-        height,
+    ctx,
+    width,
+    height,
         
-        frames = 0,
-        score = 0,
-        best = 0,
+    frames = 0,
+    score = 0,
+    best = 0,
         
-        currentstate ,
-        state = {
-            Splash: 0, Game: 1, Score: 2
-        },
+    currentstate,
+    state = {
+        Splash: 0, Game: 1, Score: 2
+    },
         
-        bird = {},
-        pipes = {};
+    bird = {},
+    pipes = {};
     
     function main(){
         canvas = document.createElement("canvas");
@@ -54,14 +53,20 @@
         if(width >= 500){
             width = 320;
             height = 480;
-            canvas.style.border = "1px solid #000"
+            canvas.style.border = "1px solid #000";
         }
         
         canvas.width = width;
         canvas.height = height;
-        ctx - canvas.getContext("2d");
+        ctx = canvas.getContext("2d");
         
-        document.body.appendChild()
+        document.body.appendChild(canvas);
+        
+        var img = new Image();
+        img.onload = function(){
+            console.log("test");
+        }
+        img.src = "res/sheet.png";
     }
     
     function run(){
@@ -75,6 +80,8 @@
     function render(){
         
     }
+    
+    main();
     
     
 </script>
