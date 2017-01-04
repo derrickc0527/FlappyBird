@@ -52,6 +52,8 @@
         gravity: 0.25,
         _jump: 4.6,
         velocity: 0,
+        radius: 12,
+        
         
         jump: function(){
             this.velocity = -this._jump;
@@ -93,6 +95,9 @@
             
             var n = this.animation[this.frame];
             s_bird[n].draw(ctx, -s_bird[n].width/2, -s_bird[n].height/2);
+            ctx.beginPath();
+            ctx.arc(0, 0, this.radius, 0, 2*Math.PI);
+            ctx.stroke();
             ctx.restore();
         }
     },
@@ -102,7 +107,7 @@
         _pipes: [],
         
         reset: function(){
-             this._pipes = [];
+    
         },
         
         update: function(){
@@ -117,6 +122,25 @@
             }
             for(var i = 0, len = this._pipes.length; i < len; i++){
                 var p = this._pipes[i];
+                
+                if(i === 0){
+                    var cx = Math.min(Math.max(bird.x, p.x), p.x+p.width);
+                    var cy1 = Math.min(Math.max(bird.y, p.y), p.y+p.height);
+                    var cy2 = Math.min(Math.max(bird.y, p.y+p.height+80), p.y+2*p.height+80);
+                    
+                    var dx = bird.x - cx;
+                    var dy1 = bird.y - cy1;
+                    var dy2 = bird.y - cy2;
+                    
+                    var d1 = dx*dx + dy1*dy1;
+                    var d2 = dx*dx + dy2*dy2;
+                    
+                    var r = bird.radius*bird.radius;
+                    
+                    if(r > d1 || r > d2){
+                        currentstate = state.Score;
+                    }
+                }
                 
                 p.x -= 2;
                 if(p.x < -50){
@@ -231,6 +255,11 @@
         if(currentstate === state.Splash){
             s_splash.draw(ctx, width2 - s_splash.width/2, height - 300);
             s_text.GetReady.draw(ctx, width2 - s_text.GetReady.width/2, height - 380);
+        }
+        
+        if(currentstate === state.Score){
+            s_text.GameOver.draw(ctx, width2 - s_text.GameOver.width/2, height-400);
+            s_score.draw(ctx, width2 - s_score.width/2, height-340);
         }
     }
     
